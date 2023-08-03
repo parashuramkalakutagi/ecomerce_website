@@ -11,6 +11,8 @@ router.register('Sent_otp',Sent_otp,basename='Sent_otp')
 router.register('VerifyOtp',VerifyOtp,basename='VerifyOtp')
 
 router.register('RegisteViewset',RegisteViewset,basename='RegisteViewset')
+router.register('LoginViewset',LoginViewset,basename='LoginViewset')
+router.register('LogoutViewset',LogoutViewset,basename='LogoutViewset')
 
 
 

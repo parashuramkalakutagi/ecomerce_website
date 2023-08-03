@@ -17,7 +17,7 @@ class Login(models.Model):
 
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,null=True,blank=True)
     phone_number = models.CharField(max_length=12,null=True,blank=True)
     password = models.CharField(max_length=10)
     confirm_password = models.CharField(max_length=10)

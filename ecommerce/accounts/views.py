@@ -59,3 +59,38 @@ class RegisteViewset(viewsets.ViewSet):
         except Exception as e:
             print(e)
             return Response({'msg':'something went wrong'},status=HTTP_400_BAD_REQUEST)
+
+class LoginViewset(viewsets.ViewSet):
+
+    def create(self, request, *args, **kwargs):
+        try:
+           data = request.data
+           sr = LoginSerializer(data=data)
+
+           if not  sr.is_valid():
+               return Response(sr.errors,status=HTTP_400_BAD_REQUEST)
+           responce = sr.jwt_token_for_user(sr.data)
+
+           return Response(responce,status=HTTP_200_OK)
+
+        except Exception as e:
+            print(e)
+            return Response({'msg':'something went wrong '},status=HTTP_400_BAD_REQUEST)
+
+class LogoutViewset(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def create(self,request,*args,**kwargs):
+        try:
+            data = request.data
+            refresh  = data['Refreshtoken']
+            token = RefreshToken(refresh)
+            token.blacklist()
+            if not token:
+                return Response({'data':{'msg':'invalid token...!'}},status=HTTP_400_BAD_REQUEST)
+            return Response({'data':{'msg':'logout successfully...'}},status=HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response({'msg':'something went wrong '},status=HTTP_400_BAD_REQUEST)
+
