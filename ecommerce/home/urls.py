@@ -7,6 +7,10 @@ from home.views import *
 
 router = DefaultRouter()
 
+router.register('ItemViewset',ItemViewset,basename='ItemViewset')
+router.register('ItemsListViewset',ItemsListViewset,basename='ItemsListViewset')
+router.register('OrderItemsViewset',OrderItemsViewset,basename='OrderItemsViewset')
+
 
 
 urlpatterns = [

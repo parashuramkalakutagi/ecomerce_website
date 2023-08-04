@@ -26,12 +26,14 @@ LABALE_CHOICES = (
 
 class item(BaseModel):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+    product_image = models.ImageField(upload_to='product_images',null=True)
     title = models.CharField(max_length=100)
     price = models.FloatField(default=0,null=True,blank=True)
     catagory = models.CharField(choices=CATAGORY_CHOICES,max_length=5)
     lable = models.CharField(choices=LABALE_CHOICES,max_length=5)
     discount_price = models.FloatField(null=True,blank=True)
     description = models.TextField(null=True,blank=True,default=False)
+
 
 
     def __str__(self):
@@ -42,8 +44,7 @@ class orderitem(BaseModel):
     items = models.ForeignKey(item,on_delete=models.CASCADE,related_name='orderitem',related_query_name='orderitem')
     quntity = models.IntegerField(default=1)
 
-    def __str__(self):
-        return self.item
+
 class order(BaseModel):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     items = models.ManyToManyField(orderitem,related_name='order',related_query_name='order')
