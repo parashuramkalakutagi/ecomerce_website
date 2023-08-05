@@ -10,6 +10,9 @@ router = DefaultRouter()
 router.register('ItemViewset',ItemViewset,basename='ItemViewset')
 router.register('ItemsListViewset',ItemsListViewset,basename='ItemsListViewset')
 router.register('OrderItemsViewset',OrderItemsViewset,basename='OrderItemsViewset')
+router.register('OrderItemsList',OrderItemsList,basename='OrderItemsList')
+router.register('OrderViewset',OrderViewset,basename='OrderViewset')
+router.register('orderList',orderList,basename='orderList')
 
 
 

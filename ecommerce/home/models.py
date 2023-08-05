@@ -45,12 +45,14 @@ class orderitem(BaseModel):
     quntity = models.IntegerField(default=1)
 
 
+
+
 class order(BaseModel):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    items = models.ManyToManyField(orderitem,related_name='order',related_query_name='order')
+    items = models.ForeignKey(orderitem,on_delete=models.CASCADE,related_name='order',related_query_name='order')
     created_at = models.DateTimeField(auto_now_add=True)
-    ordered_date = models.DateTimeField()
+    ordered_date = models.DateTimeField(auto_now_add=True)
     ordered = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user
+        return self.items

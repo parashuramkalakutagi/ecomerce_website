@@ -52,3 +52,46 @@ class OrderItemsViewset(viewsets.ViewSet):
         except Exception as e:
             print(e)
             return Response({'data':{'msg':'something went wrong'}},status=HTTP_400_BAD_REQUEST)
+
+
+class OrderItemsList(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def list(self,request,*args,**kwargs):
+        try:
+            object = orderitem.objects.filter(user = request.user).values_list('uuid','items','quntity').distinct()[:]
+            return Response(object)
+        except Exception as e:
+            print(e)
+            return Response({'data':{'msg':'something went wrong'}},status=HTTP_400_BAD_REQUEST)
+
+
+class OrderViewset(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    def create(self,request,*args,**kwargs):
+        try:
+            data = request.data
+            order.objects.create(user = request.user ,
+                                 items = orderitem.objects.get(uuid = data.get('items')),
+                                 ordered_date = data.get('ordered_date'),
+                                 ordered = data.get('ordered'))
+            return  Response({'data':{'msg':'order posted successfully...'}},status=HTTP_201_CREATED)
+        except Exception as e:
+            print(e)
+            return Response({'data':{'msg':'something went wrong...'}},status=HTTP_400_BAD_REQUEST)
+
+class orderList(viewsets.ViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def list(self,request):
+        try:
+            object = order.objects.filter(user = request.user).order_by('ordered_date')
+            sr = orderserializer(data=object,many=True)
+            if sr.is_valid():
+                sr.save()
+            return Response(sr.data)
+        except Exception as e:
+            print(e)
