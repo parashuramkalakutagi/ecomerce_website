@@ -13,6 +13,8 @@ router.register('OrderItemsViewset',OrderItemsViewset,basename='OrderItemsViewse
 router.register('OrderItemsList',OrderItemsList,basename='OrderItemsList')
 router.register('OrderViewset',OrderViewset,basename='OrderViewset')
 router.register('orderList',orderList,basename='orderList')
+router.register('ordercountViewset',ordercountViewset,basename='ordercountViewset')
+
 
 
 

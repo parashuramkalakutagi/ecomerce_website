@@ -7,6 +7,7 @@ from rest_framework.status import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAuthenticatedOrReadOnly
 from rest_framework import viewsets
+from django.db.models import Sum,Max,Min,Count
 
 
 class ItemViewset(viewsets.ViewSet):
@@ -82,6 +83,19 @@ class OrderViewset(viewsets.ViewSet):
             print(e)
             return Response({'data':{'msg':'something went wrong...'}},status=HTTP_400_BAD_REQUEST)
 
+    def delete(self,request,*args,**kwargs):
+        try:
+            data = request.data
+            object = order.objects.get(user = request.user , uuid = data.get('uuid'))
+            if not object:
+                return Response({'data':{'msg':'invalid order id ...'}},status=HTTP_400_BAD_REQUEST)
+            object.delete()
+            return Response({'data':{'msg':'order has been canceld ...!'}},status=HTTP_200_OK)
+        except Exception as e:
+            print(e)
+
+
+
 class orderList(viewsets.ViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -95,3 +109,15 @@ class orderList(viewsets.ViewSet):
             return Response(sr.data)
         except Exception as e:
             print(e)
+
+class ordercountViewset(viewsets.ViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def list(self,request,*args,**kwargs):
+        try:
+            object = order.objects.values('items').annotate(count = Count('items'))
+            return Response(object)
+        except Exception as e:
+            print(e)
+
