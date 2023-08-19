@@ -14,6 +14,7 @@ router.register('OrderItemsList',OrderItemsList,basename='OrderItemsList')
 router.register('OrderViewset',OrderViewset,basename='OrderViewset')
 router.register('orderList',orderList,basename='orderList')
 router.register('ordercountViewset',ordercountViewset,basename='ordercountViewset')
+router.register('TransactionViewset',TransactionViewset,basename='TransactionViewset')
 
 
 

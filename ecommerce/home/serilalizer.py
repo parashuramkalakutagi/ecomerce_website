@@ -10,3 +10,9 @@ class orderserializer(serializers.ModelSerializer):
     class Meta:
         model = order
         fields = '__all__'
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Amount_transaction
+        fields = '__all__'

@@ -166,3 +166,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'parashuramkalakutagi9@gmail.com'
 EMAIL_HOST_PASSWORD = 'lqnpwojjvsjdgnmo'
+
+
+# RAZOR PAY API KEYS
+RAZORPAY_KEY_ID = 'rzp_test_JjNGL48QhY7ty7'
+RAZORPAY_SECREATE_ID = 'd01DzJwMLSSF4XWvWSflleZp'
